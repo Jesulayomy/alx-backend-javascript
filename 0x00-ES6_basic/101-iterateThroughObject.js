@@ -3,5 +3,5 @@ export default function iterateThroughObject(reportWithIterator) {
   for (let name of reportWithIterator) {
     names += name + ' | ';
   }
-  return names.slice(0, -2);
+  return names.slice(0, names.length - 3);
 }
