@@ -1,5 +1,5 @@
 export default function iterateThroughObject(reportWithIterator) {
-  const names = '';
+  let names = '';
   for (const name of reportWithIterator) {
     names += name + ' | ';
   }
