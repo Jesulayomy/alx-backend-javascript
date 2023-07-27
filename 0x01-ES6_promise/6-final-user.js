@@ -7,13 +7,13 @@ export default async function handleProfileSignup(firstName, lastName, fileName)
     .then(([signResult, uploadResult]) => [
       {
         status: signResult.status,
-        value: signResult.status === 'fulfilled' ? signResult.value : signResult.reason,
+        value: signResult.status === 'fulfilled' ? String(signResult.value) : String(signResult.reason),
       },
       {
         status: uploadResult.status,
         value:
           uploadResult.status === 'fulfilled'
-            ? uploadResult.value : uploadResult.reason.message,
+            ? String(uploadResult.value) : String(uploadResult.reason),
       },
     ]);
 }
