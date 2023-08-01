@@ -1,4 +1,4 @@
-export default function updateStudentGradeByCity (listStudents, city, newGrades) {
+export default function updateStudentGradeByCity(listStudents, city, newGrades) {
   return listStudents.filter((student) => student.location === city)
     .map((student) => {
       for (const newGrade of newGrades) {
