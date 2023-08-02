@@ -4,7 +4,7 @@ export default function updateStudentGradeByCity(listStudents, city, newGrades) 
       for (const newGrade of newGrades) {
         if (student.id === newGrade.studentId) {
           return { ...student, grade: newGrade.grade };
-	}
+        }
       }
       return { ...student, grade: 'N/A' };
     });
