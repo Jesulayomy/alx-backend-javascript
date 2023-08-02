@@ -1,5 +1,3 @@
 export default function getStudentIdsSum(listStudents) {
-  let total = 0
-  return listStudents.map((student) => student.id)
-    .reduce((sum, id) => sum + id, total);
+  return listStudents.reduce((sum, std) => sum + std.id, 0);
 }
