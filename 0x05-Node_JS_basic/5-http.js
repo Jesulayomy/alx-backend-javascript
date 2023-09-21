@@ -1,12 +1,14 @@
 const http = require('http');
-const fs = require('fs/promises');
+const fs = require('fs');
 
 const app = http.createServer((req, res) => {
   if (req.url === '/') res.end('Hello Holberton School!');
   else if (req.url === '/students') {
-    fs.readFile(process.argv[2], { encoding: 'utf8' })
-      .then((data) => {
-        let response = 'This is the list of our students\n';
+    let response = 'This is the list of our students\n';
+    fs.readFile(process.argv[2], { encoding: 'utf8' }, (err, data) => {
+      if (err) {
+        res.end(`${response}Cannot load the database`);
+      } else {
         const lines = data.split('\n');
         let noOfStudents = 0;
         const fields = {};
@@ -27,11 +29,8 @@ const app = http.createServer((req, res) => {
         }
         response = response.slice(0, -1);
         res.end(response);
-      })
-      // eslint-disable-next-line no-unused-vars
-      .catch((_err) => {
-        res.end('Cannot load the database');
-      });
+      }
+    });
   }
 });
 

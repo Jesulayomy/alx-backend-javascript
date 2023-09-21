@@ -1,9 +1,11 @@
-import fs from 'fs/promises';
+import fs from 'fs';
 
-function readDatabase(path) {
+function readDatabase (path) {
   return new Promise((resolve, reject) => {
-    fs.readFile(path, { encoding: 'utf8' })
-      .then((data) => {
+    fs.readFile(path, { encoding: 'utf8' }, (err, data) => {
+      if (err) {
+        reject(Error('Cannot load the database'));
+      } else {
         const lines = data.split('\n');
         const fields = {};
         for (const line of lines) {
@@ -15,11 +17,8 @@ function readDatabase(path) {
           else fields[field].push(firstname);
         }
         resolve(fields);
-      })
-      // eslint-disable-next-line no-unused-vars
-      .catch((_err) => {
-        reject(Error('Cannot load the database'));
-      });
+      }
+    });
   });
 }
 

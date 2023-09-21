@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 const express = require('express');
-const fs = require('fs/promises');
+const fs = require('fs');
 
 const app = express();
 
@@ -9,9 +9,11 @@ app.get('/', (req, res) => {
 });
 
 app.get('/students', (req, res) => {
-  fs.readFile(process.argv[2], { encoding: 'utf8' })
-    .then((data) => {
-      let response = 'This is the list of our students\n';
+  let response = 'This is the list of our students\n';
+  fs.readFile(process.argv[2], { encoding: 'utf8' }, (err, data) => {
+    if (err) {
+      res.end(`${response}Cannot load the database`);
+    } else {
       const lines = data.split('\n');
       let noOfStudents = 0;
       const fields = {};
@@ -31,11 +33,9 @@ app.get('/students', (req, res) => {
         response += `Number of students in ${field}: ${noOfStudents}. List: ${listOfStudents}\n`;
       }
       response = response.slice(0, -1);
-      res.send(response);
-    })
-    .catch((_err) => {
-      res.send('Cannot load the database');
-    });
+      res.end(response);
+    }
+  });
 });
 
 app.listen(1245);
